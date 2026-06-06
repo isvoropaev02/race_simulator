@@ -9,7 +9,7 @@ from src.renderer import Renderer
 
 SCREEN_WIDTH, SCREEN_HEIGHT = 1200, 800
 FPS = 30
-TIME_SCALE_SKI = 50.0
+TIME_SCALE_SKI = 200.0
 ATHLETES_FILE = "db/athletes.json"
 TRACK_FILE = "db/track.csv"
 PENALTY_FILE = "db/penalty_loop.csv"
@@ -34,43 +34,35 @@ def load_race_athletes(filepath: str, athletes_db: dict) -> list:
     athlete_list = []
     for aid in race_data["athletes"]:
         if aid not in athletes_db:
-            print(f"Внимание: спортсмен с id '{aid}' не найден в базе, пропущен.")
+            print(f"[WARNING] Sportsman with id: '{aid}' not found in athletes.json.")
             continue
         athlete_list.append(athletes_db[aid])
     return athlete_list
 
 
 def run():
-    # ---------- Загрузка данных ----------
-    print("Загрузка спортсменов...")
     athletes_db = load_athletes(ATHLETES_FILE)
-    print(f"Загружено {len(athletes_db)} спортсменов.")
-
-    print("Загрузка трасс...")
+    print(f"[INFO] Loaded {len(athletes_db)} sportsmen.")
     main_track = Track(TRACK_FILE)
-    print(f"Основная трасса: {main_track.total_length:.0f} м, {len(main_track.segments)} сегментов.")
+    print(f"[INFO] Main track length: {main_track.total_length:.0f} m, {len(main_track.segments)} segments.")
     penalty_track = Track(PENALTY_FILE)
-    print(f"Штрафной круг: {penalty_track.total_length:.0f} м.")
+    print(f"[INFO] Penalty loop length: {penalty_track.total_length:.0f} m.")
 
-    print("Загрузка состава гонки...")
     race_athletes = load_race_athletes(RACE_SETUP_FILE, athletes_db)
     if not race_athletes:
-        print("Нет участников для гонки. Проверьте race_setup.json.")
+        print("[ERROR] No athletes in race_setup.json.")
         return
-    print(f"Участников: {len(race_athletes)}")
+    print(f"[INFO] Total participants: {len(race_athletes)}")
 
-    # ---------- Инициализация Pygame ----------
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pygame.display.set_caption("Biathlon Sprint Simulator")
     clock = pygame.time.Clock()
     renderer = Renderer(screen, main_track, penalty_track)
 
-    # ---------- Проведение гонок ----------
-    results = []  # список словарей с итогами
-
+    results = []
     for idx, athlete in enumerate(race_athletes, start=1):
-        print(f"\n=== Старт спортсмена {idx}/{len(race_athletes)}: {athlete.name} ({athlete.country}) ===")
+        print(f"\n=== Started {idx}/{len(race_athletes)}: {athlete.name} ({athlete.country}) ===")
 
         sim = RaceSimulation(main_track, penalty_track, time_scale_ski=TIME_SCALE_SKI)
         sim.start_athlete(athlete)
@@ -104,21 +96,18 @@ def run():
                     "misses": status["total_misses"],  # <-- изменено
                 }
                 results.append(result)
-                print(f"Финиш: {athlete.name} — {status['time']:.1f} сек. (промахов: {status['total_misses']})")
+                print(f"Finished: {athlete.name} — {status['time']:.1f} sec. (misses: {status['total_misses']})")
                 # Небольшая пауза, чтобы увидеть финиш на экране
                 pygame.time.wait(1500)
                 running = False
 
-    # ---------- Итоговый протокол ----------
-    print("\n=== Итоговый протокол ===")
-    # Сортировка по времени
+    print("\n=== Final results ===")
     results.sort(key=lambda r: r["time"])
     for place, r in enumerate(results, start=1):
         minutes = int(r["time"] // 60)
         seconds = r["time"] % 60
-        print(f"{place}. {r['name']} ({r['country']}) — {minutes}:{seconds:05.2f} (промахов: {r['misses']})")
+        print(f"{place}. {r['name']} ({r['country']}) — {minutes}:{seconds:05.2f} (total misses: {r['misses']})")
 
-    # Завершение работы
     pygame.time.wait(2000)
     pygame.quit()
 

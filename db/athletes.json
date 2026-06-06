@@ -1,51 +1,99 @@
 {
     "athletes": [
         {
-            "id": "bjorndalen",
-            "name": "Ole Einar Bjorndalen",
-            "country": "NOR",
-            "age": 40,
+            "id": "perrot",
+            "name": "ERIC PERROT",
+            "country": "FRA",
+            "age": 25,
             "skills": {
                 "uphill": 85,
                 "flat": 90,
-                "downhill": 78,
-                "shoot_speed_prone": 92,
-                "shoot_acc_prone": 88,
-                "shoot_speed_stand": 85,
-                "shoot_acc_stand": 80,
-                "finish_sprint": 95
+                "downhill": 83,
+                "shoot_speed_prone": 85,
+                "shoot_acc_prone": 94,
+                "shoot_speed_stand": 97,
+                "shoot_acc_stand": 89,
+                "finish_sprint": 0
             }
         },
         {
-            "id": "fourcade",
-            "name": "Martin Fourcade",
+            "id": "laegreid",
+            "name": "STURLA HOLM LEIGREID",
+            "country": "NOR",
+            "age": 29,
+            "skills": {
+                "uphill": 90,
+                "flat": 88,
+                "downhill": 84,
+                "shoot_speed_prone": 86,
+                "shoot_acc_prone": 94,
+                "shoot_speed_stand": 91,
+                "shoot_acc_stand": 91,
+                "finish_sprint": 0
+            }
+        },
+        {
+            "id": "botn",
+            "name": "JOHAN-OLAV BOTN",
+            "country": "NOR",
+            "age": 27,
+            "skills": {
+                "uphill": 86,
+                "flat": 88,
+                "downhill": 82,
+                "shoot_speed_prone": 80,
+                "shoot_acc_prone": 97,
+                "shoot_speed_stand": 83,
+                "shoot_acc_stand": 95,
+                "finish_sprint": 0
+            }
+        },
+        {
+            "id": "samuelsson",
+            "name": "SEBASTIAN SAMUELSSON",
+            "country": "SWE",
+            "age": 29,
+            "skills": {
+                "uphill": 86,
+                "flat": 91,
+                "downhill": 88,
+                "shoot_speed_prone": 85,
+                "shoot_acc_prone": 90,
+                "shoot_speed_stand": 86,
+                "shoot_acc_stand": 88,
+                "finish_sprint": 0
+            }
+        },
+        {
+            "id": "jacquelin",
+            "name": "EMILIEN JACQUELIN",
             "country": "FRA",
             "age": 31,
             "skills": {
                 "uphill": 89,
-                "flat": 91,
-                "downhill": 77,
-                "shoot_speed_prone": 94,
-                "shoot_acc_prone": 89,
-                "shoot_speed_stand": 90,
-                "shoot_acc_stand": 80,
-                "finish_sprint": 96
+                "flat": 92,
+                "downhill": 85,
+                "shoot_speed_prone": 87,
+                "shoot_acc_prone": 91,
+                "shoot_speed_stand": 99,
+                "shoot_acc_stand": 89,
+                "finish_sprint": 0
             }
         },
         {
-            "id": "svendsen",
-            "name": "Emil Hegle Svendsen",
-            "country": "NOR",
-            "age": 31,
+            "id": "giacomel",
+            "name": "TOMMASO GIACOMEL",
+            "country": "ITA",
+            "age": 26,
             "skills": {
                 "uphill": 89,
-                "flat": 91,
-                "downhill": 79,
-                "shoot_speed_prone": 91,
-                "shoot_acc_prone": 90,
-                "shoot_speed_stand": 89,
-                "shoot_acc_stand": 77,
-                "finish_sprint": 99
+                "flat": 96,
+                "downhill": 89,
+                "shoot_speed_prone": 88,
+                "shoot_acc_prone": 93,
+                "shoot_speed_stand": 91,
+                "shoot_acc_stand": 90,
+                "finish_sprint": 0
             }
         }
     ]
