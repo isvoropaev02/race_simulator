@@ -13,7 +13,8 @@
                 "shoot_acc_prone": 94,
                 "shoot_speed_stand": 97,
                 "shoot_acc_stand": 89,
-                "finish_sprint": 0
+                "finish_sprint": 94,
+                "endurance": 90
             }
         },
         {
@@ -29,7 +30,8 @@
                 "shoot_acc_prone": 94,
                 "shoot_speed_stand": 91,
                 "shoot_acc_stand": 91,
-                "finish_sprint": 0
+                "finish_sprint": 94,
+                "endurance": 88
             }
         },
         {
@@ -45,7 +47,8 @@
                 "shoot_acc_prone": 97,
                 "shoot_speed_stand": 83,
                 "shoot_acc_stand": 95,
-                "finish_sprint": 0
+                "finish_sprint": 89,
+                "endurance": 97
             }
         },
         {
@@ -61,7 +64,8 @@
                 "shoot_acc_prone": 90,
                 "shoot_speed_stand": 86,
                 "shoot_acc_stand": 88,
-                "finish_sprint": 0
+                "finish_sprint": 95,
+                "endurance": 95
             }
         },
         {
@@ -77,7 +81,8 @@
                 "shoot_acc_prone": 91,
                 "shoot_speed_stand": 99,
                 "shoot_acc_stand": 89,
-                "finish_sprint": 0
+                "finish_sprint": 97,
+                "endurance": 89
             }
         },
         {
@@ -93,7 +98,8 @@
                 "shoot_acc_prone": 93,
                 "shoot_speed_stand": 91,
                 "shoot_acc_stand": 90,
-                "finish_sprint": 0
+                "finish_sprint": 95,
+                "endurance": 92
             }
         }
     ]

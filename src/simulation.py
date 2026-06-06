@@ -41,6 +41,7 @@ class RaceSimulation:
     def start_athlete(self, athlete: Athlete):
         """Подготовить нового спортсмена и начать гонку."""
         self.athlete_state = AthleteState(athlete)
+        self.athlete_state.set_finish_sprint(False)
         self.state = RaceState.SKIING_LOOP_1
         self.loop_counter = 0
         self.penalty_loops_remaining = 0
@@ -82,6 +83,13 @@ class RaceSimulation:
             # Текущий сегмент и его длина
             seg, dist_in_seg = track.get_segment(dist)
             remaining_in_seg = seg.length - dist_in_seg
+
+            # --- финишное ускорение ---
+            if self.loop_counter == 3 and (track.total_length - athlete.distance) <= 1000:
+                athlete.set_finish_sprint(True)
+            else:
+                athlete.set_finish_sprint(False)
+            # -------------------------
 
             # Скорость и время до конца сегмента
             athlete.speed = athlete._base_speed(seg.slope) * athlete._fatigue_multiplier()

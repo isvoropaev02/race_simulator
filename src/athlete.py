@@ -60,6 +60,7 @@ class AthleteState:
         self.fatigue = 0.0  # уровень усталости (0 = свеж)
         self.speed = 0.0  # текущая скорость, м/с (вычисляется при каждом обновлении)
         self.time = 0.0  # общее время гонки спортсмена, сек
+        self.finish_sprint_active = False
 
         # Стрельба
         self.shooting_state = ShootingState.IDLE
@@ -85,13 +86,14 @@ class AthleteState:
 
     def _base_speed(self, slope: float) -> float:
         """Базовая скорость на данном уклоне без учёта усталости."""
+        finish_boost = 0.85 if self.finish_sprint_active else 0.0
         cat = self._slope_category(slope)
         if cat == "uphill":
-            return (self.athlete.skills["uphill"] / 100.0) * V_ADD_UPHILL + V_BASE_UPHILL
+            return (self.athlete.skills["uphill"] / 100.0) * V_ADD_UPHILL + V_BASE_UPHILL * (1 + finish_boost)
         elif cat == "downhill":
-            return (self.athlete.skills["downhill"] / 100.0) * V_ADD_DOWNHILL + V_BASE_DOWNHILL
+            return (self.athlete.skills["downhill"] / 100.0) * V_ADD_DOWNHILL + V_BASE_DOWNHILL * (1 + finish_boost)
         else:  # flat
-            return (self.athlete.skills["flat"] / 100.0) * V_ADD_FLAT + V_BASE_FLAT
+            return (self.athlete.skills["flat"] / 100.0) * V_ADD_FLAT + V_BASE_FLAT * (1 + finish_boost)
 
     def _fatigue_multiplier(self) -> float:
         """Коэффициент замедления из-за накопленной усталости."""
@@ -112,9 +114,14 @@ class AthleteState:
         self.time += dt
 
         # Рост усталости
-        fatigue_gain = FATIGUE_RATE * FATIGUE_FACTOR[cat] * dt
+        endurance = self.athlete.skills.get("endurance", 50)
+        endurance_factor = 1.0 - endurance / 250.0
+        fatigue_gain = FATIGUE_RATE * FATIGUE_FACTOR[cat] * dt * endurance_factor
         # Можно также добавить зависимость от дистанции (небольшой коэффициент)
         self.fatigue += fatigue_gain
+
+    def set_finish_sprint(self, active: bool):
+        self.finish_sprint_active = active
 
     # -----------------------------------------------------------------
     # Стрельба
