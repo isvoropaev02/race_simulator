@@ -60,6 +60,8 @@ class AthleteState:
         self.misses = 0  # сколько промахов в текущей серии
         self.shooting_type = None  # 'prone' или 'stand'
         self.shot_interval = 0.0  # интервал между выстрелами (вычисляется при старте стрельбы)
+        self.total_misses = 0
+        self.shot_results = []
 
     # -----------------------------------------------------------------
     # Движение
@@ -118,6 +120,7 @@ class AthleteState:
         self.shot_timer = 0.0
         self.shots_fired = 0
         self.misses = 0
+        self.shot_results = []
         self.shooting_type = shooting_type
 
         # Определяем навык скорости стрельбы
@@ -151,11 +154,14 @@ class AthleteState:
                 acc_skill = self.athlete.skills["shoot_acc_stand"]
 
             hit_prob = P_HIT_MIN + 0.8 * (acc_skill / 100.0)
-            if random.random() > hit_prob:
+            hit = random.random() < hit_prob
+            self.shot_results.append(hit)
+            if not hit:
                 self.misses += 1
 
         if self.shots_fired == 5:
             self.shooting_state = ShootingState.FINISHED
+            self.total_misses += self.misses
             return True
         return False
 

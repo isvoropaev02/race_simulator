@@ -221,4 +221,6 @@ class RaceSimulation:
             "misses": athlete.misses,
             "penalty_loops_left": self.penalty_loops_remaining,
             "loop": self.loop_counter,
+            "total_misses": athlete.total_misses,
+            "shot_results": athlete.shot_results,
         }

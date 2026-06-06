@@ -1,4 +1,3 @@
-# main.py
 import sys
 import json
 import pygame
@@ -10,7 +9,7 @@ from src.renderer import Renderer
 
 SCREEN_WIDTH, SCREEN_HEIGHT = 1200, 800
 FPS = 30
-TIME_SCALE_SKI = 9.0  # ускорение лыжной части (подобрано для ~4 мин показа)
+TIME_SCALE_SKI = 50.0
 ATHLETES_FILE = "db/athletes.json"
 TRACK_FILE = "db/track.csv"
 PENALTY_FILE = "db/penalty_loop.csv"
@@ -89,15 +88,23 @@ def run():
 
             # Обновление симуляции
             status = sim.update(dt_real)
-            renderer.draw(status)
 
+            # Передаём актуальные результаты в рендерер для таблицы лидеров
+            renderer.set_results(results)  # <-- новое
+
+            renderer.draw(status)
             pygame.display.flip()
 
             if status["finished"]:
-                # Запись результата
-                result = {"name": athlete.name, "country": athlete.country, "time": status["time"]}
+                # Запись результата с суммарными промахами
+                result = {
+                    "name": athlete.name,
+                    "country": athlete.country,
+                    "time": status["time"],
+                    "misses": status["total_misses"],  # <-- изменено
+                }
                 results.append(result)
-                print(f"Финиш: {athlete.name} — {status['time']:.1f} сек.")
+                print(f"Финиш: {athlete.name} — {status['time']:.1f} сек. (промахов: {status['total_misses']})")
                 # Небольшая пауза, чтобы увидеть финиш на экране
                 pygame.time.wait(1500)
                 running = False
@@ -109,7 +116,7 @@ def run():
     for place, r in enumerate(results, start=1):
         minutes = int(r["time"] // 60)
         seconds = r["time"] % 60
-        print(f"{place}. {r['name']} ({r['country']}) — {minutes}:{seconds:05.2f}")
+        print(f"{place}. {r['name']} ({r['country']}) — {minutes}:{seconds:05.2f} (промахов: {r['misses']})")
 
     # Завершение работы
     pygame.time.wait(2000)
