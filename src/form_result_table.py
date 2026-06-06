@@ -11,15 +11,15 @@ def build_leaderboard_rows(results):
     table_rows = []
 
     for place, r in enumerate(sorted_res, start=1):
-        name = r["name"][:20]
-        country = r["country"][:8]
+        name = r["name"]
+        country = r["country"][:4]
         misses = r["misses"]
         t = r["time"]
 
         if place == 1:
             minutes = int(t // 60)
             seconds = t % 60
-            time_str = f"{minutes}:{seconds:05.2f}"
+            time_str = f"{minutes}.{seconds:05.2f}"
         else:
             diff = t - first_time
             minutes = int(diff // 60)

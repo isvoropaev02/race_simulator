@@ -23,16 +23,17 @@ class Renderer:
         self.penalty_track = penalty_track
         self.font = pygame.font.Font(None, 24)
         self.font_small = pygame.font.Font(None, 20)
+        self.font_leaderboard = pygame.font.Font(None, 19)
         self.results = []  # <-- НОВОЕ
 
         # Вычисляем области экрана
         self.width, self.height = screen.get_size()
         # Карта (слева)
-        self.map_rect = pygame.Rect(0, 0, int(self.width * 0.68), int(self.height * 0.72))
+        self.map_rect = pygame.Rect(0, 0, int(self.width * 0.64), int(self.height * 0.72))
 
         # Правая панель делим на три вертикальных блока
         info_width = self.width - self.map_rect.right - 10
-        info_height = 200  # <-- Верхний блок с данными
+        info_height = 100  # <-- Верхний блок с данными
         shooting_height = 80  # <-- Блок с мишенями (только при стрельбе)
         self.info_rect = pygame.Rect(self.map_rect.right + 5, 5, info_width, info_height)
         self.shooting_rect = pygame.Rect(self.map_rect.right + 5, self.info_rect.bottom + 5, info_width, shooting_height)
@@ -161,16 +162,12 @@ class Renderer:
             minutes = int(t // 60)
             seconds = t % 60
             lines.append(f"Time: {minutes}:{seconds:05.2f}")
-            lines.append(f"State: {status.get('state', '')}")
-            penalty = status.get("penalty_loops_left", 0)
-            lines.append(f"Tot. misses: {status.get("total_misses", "-")}")
-            if penalty > 0:
-                lines.append(f"Penalty loops left: {penalty}")
+            lines.append(f"State: {status.get('state', '')} | Tot. misses: {status.get("total_misses", "-")}")
+
             # Скорость и усталость
             speed = status.get("speed", 0.0)
-            lines.append(f"Speed: {speed:.2f} m/s")
             fatigue = status.get("fatigue", 0.0)
-            lines.append(f"Fatigue: {fatigue:.3f}")
+            lines.append(f"Speed: {speed:.2f} m/s | Fatigue: {fatigue:.3f}")
 
         y = self.info_rect.top + 8
         for line in lines:
@@ -226,26 +223,27 @@ class Renderer:
             return
 
         sorted_results = sorted(self.results, key=lambda r: r["time"])
-        first_time = sorted_results[0]["time"]  # новое
+        first_time = sorted_results[0]["time"]
         y = self.leaderboard_rect.top + 28
 
         for place, r in enumerate(sorted_results, start=1):
+            name = r["name"]
+            if len(name) > 24:
+                name = name[:23] + "…"  # обрезаем с многоточием
             t = r["time"]
             if place == 1:
-                # Абсолютное время лидера
                 minutes = int(t // 60)
                 seconds = t % 60
-                time_str = f"{minutes}:{seconds:05.2f}"
+                time_str = f"{minutes}.{seconds:05.2f}"
             else:
-                # Отставание от первого
                 diff = t - first_time
                 minutes = int(diff // 60)
                 seconds = diff % 60
                 time_str = f"+{minutes}.{seconds:04.1f}"
 
-            line = f"{place}. {r['name']} ({r['country']})  misses:{r['misses']}  {time_str}"
-            text = self.font_small.render(line, True, COLOR_TEXT)
+            line = f"{place}. {name} ({r['country']})  misses:{r['misses']}  {time_str}"
+            text = self.font_leaderboard.render(line, True, COLOR_TEXT)
             self.screen.blit(text, (self.leaderboard_rect.left + 8, y))
-            y += 20
+            y += 18  # уменьшаем шаг под более мелкий шрифт
             if y > self.leaderboard_rect.bottom - 10:
                 break

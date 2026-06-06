@@ -2,7 +2,7 @@
     "athletes": [
         {
             "id": "perrot",
-            "name": "ERIC PERROT",
+            "name": "PERROT Eric",
             "country": "FRA",
             "age": 25,
             "skills": {
@@ -19,7 +19,7 @@
         },
         {
             "id": "laegreid",
-            "name": "STURLA HOLM LEIGREID",
+            "name": "LEIGREID Sturla Holm",
             "country": "NOR",
             "age": 29,
             "skills": {
@@ -36,7 +36,7 @@
         },
         {
             "id": "botn",
-            "name": "JOHAN-OLAV BOTN",
+            "name": "BOTN Johan-Olav",
             "country": "NOR",
             "age": 27,
             "skills": {
@@ -53,7 +53,7 @@
         },
         {
             "id": "samuelsson",
-            "name": "SEBASTIAN SAMUELSSON",
+            "name": "SAMUELSSON Sebastian",
             "country": "SWE",
             "age": 29,
             "skills": {
@@ -70,7 +70,7 @@
         },
         {
             "id": "jacquelin",
-            "name": "EMILIEN JACQUELIN",
+            "name": "JACQUELIN Emilien",
             "country": "FRA",
             "age": 31,
             "skills": {
@@ -87,7 +87,7 @@
         },
         {
             "id": "giacomel",
-            "name": "TOMMASO GIACOMEL",
+            "name": "GIACOMEL Tommaso",
             "country": "ITA",
             "age": 26,
             "skills": {
@@ -104,7 +104,7 @@
         },
         {
             "id": "christiansen",
-            "name": "VETLE SJAASTAD CHRISTIANSEN",
+            "name": "CHRISTIANSEN Vetle Sjaastad",
             "country": "NOR",
             "age": 34,
             "skills": {
@@ -121,7 +121,7 @@
         },
         {
             "id": "ponsiluoma",
-            "name": "MARTIN PONSILUOMA",
+            "name": "PONSILUOMA Martin",
             "country": "SWE",
             "age": 30,
             "skills": {
@@ -138,7 +138,7 @@
         },
         {
             "id": "nawrath",
-            "name": "PHILIPP NAWRATH",
+            "name": "NAWRATH Philipp",
             "country": "GER",
             "age": 33,
             "skills": {
@@ -155,7 +155,7 @@
         },
         {
             "id": "dale",
-            "name": "JOHANNES DALE-SKJEVDAL",
+            "name": "DALE-SKJEVDAL Johannes",
             "country": "NOR",
             "age": 29,
             "skills": {
@@ -172,7 +172,7 @@
         },
         {
             "id": "fillon",
-            "name": "FILLON MAILLET Quentin",
+            "name": "FILLON-MAILLET Quentin",
             "country": "FRA",
             "age": 34,
             "skills": {

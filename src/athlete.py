@@ -62,7 +62,7 @@ class AthleteState:
         self.speed = 0.0  # текущая скорость, м/с (вычисляется при каждом обновлении)
         self.time = 0.0  # общее время гонки спортсмена, сек
         self.finish_sprint_active = False
-        self.ski_slowing = random.uniform(-0.01, 0.20)
+        self.ski_slowing = random.uniform(-0.01, 0.09)
         logger.debug(f"Ski slowing for {athlete.name} is set to {self.ski_slowing}")
 
         # Стрельба
