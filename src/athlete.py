@@ -11,7 +11,7 @@ V_BASE_DOWNHILL = 9.0
 V_ADD_DOWNHILL = 0.4
 
 FATIGUE_RATE = 0.003  # базовая скорость роста усталости (в единицах усталости за секунду)
-FATIGUE_FACTOR = {"uphill": 1.5, "flat": 1.0, "downhill": 0.6}  # множители накопления усталости в зависимости от рельефа
+FATIGUE_FACTOR = {"uphill": 1.2, "flat": 0.3, "downhill": -0.1}  # множители накопления усталости в зависимости от рельефа
 K_FATIGUE = 0.05  # насколько сильно усталость замедляет (скорость *= (1 - k*F))
 
 T_BASE_PRONE_SHOT = 3.2
@@ -115,7 +115,7 @@ class AthleteState:
 
         # Рост усталости
         endurance = self.athlete.skills.get("endurance", 50)
-        endurance_factor = 1.0 - endurance / 250.0
+        endurance_factor = 1.0 - endurance / 500.0
         fatigue_gain = FATIGUE_RATE * FATIGUE_FACTOR[cat] * dt * endurance_factor
         # Можно также добавить зависимость от дистанции (небольшой коэффициент)
         self.fatigue += fatigue_gain
