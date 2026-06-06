@@ -101,6 +101,91 @@
                 "finish_sprint": 95,
                 "endurance": 92
             }
+        },
+        {
+            "id": "christiansen",
+            "name": "VETLE SJAASTAD CHRISTIANSEN",
+            "country": "NOR",
+            "age": 34,
+            "skills": {
+                "uphill": 80,
+                "flat": 98,
+                "downhill": 98,
+                "shoot_speed_prone": 82,
+                "shoot_acc_prone": 88,
+                "shoot_speed_stand": 85,
+                "shoot_acc_stand": 88,
+                "finish_sprint": 99,
+                "endurance": 84
+            }
+        },
+        {
+            "id": "ponsiluoma",
+            "name": "MARTIN PONSILUOMA",
+            "country": "SWE",
+            "age": 30,
+            "skills": {
+                "uphill": 97,
+                "flat": 98,
+                "downhill": 96,
+                "shoot_speed_prone": 81,
+                "shoot_acc_prone": 85,
+                "shoot_speed_stand": 82,
+                "shoot_acc_stand": 85,
+                "finish_sprint": 98,
+                "endurance": 95
+            }
+        },
+        {
+            "id": "nawrath",
+            "name": "PHILIPP NAWRATH",
+            "country": "GER",
+            "age": 33,
+            "skills": {
+                "uphill": 84,
+                "flat": 89,
+                "downhill": 95,
+                "shoot_speed_prone": 82,
+                "shoot_acc_prone": 83,
+                "shoot_speed_stand": 85,
+                "shoot_acc_stand": 81,
+                "finish_sprint": 92,
+                "endurance": 87
+            }
+        },
+        {
+            "id": "dale",
+            "name": "JOHANNES DALE-SKJEVDAL",
+            "country": "NOR",
+            "age": 29,
+            "skills": {
+                "uphill": 98,
+                "flat": 97,
+                "downhill": 93,
+                "shoot_speed_prone": 81,
+                "shoot_acc_prone": 85,
+                "shoot_speed_stand": 81,
+                "shoot_acc_stand": 82,
+                "finish_sprint": 99,
+                "endurance": 98
+            }
+        },
+        {
+            "id": "fillon",
+            "name": "FILLON MAILLET Quentin",
+            "country": "FRA",
+            "age": 34,
+            "skills": {
+                "uphill": 96,
+                "flat": 96,
+                "downhill": 96,
+                "shoot_speed_prone": 89,
+                "shoot_acc_prone": 93,
+                "shoot_speed_stand": 91,
+                "shoot_acc_stand": 92,
+                "finish_sprint": 96,
+                "endurance": 97
+            }
         }
     ]
 }

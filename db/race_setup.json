@@ -1,11 +1,16 @@
 {
-    "race_name": "Sprint Test",
-    "athletes": [
-        "perrot",
-        "laegreid",
-        "botn",
-        "samuelsson",
-        "jacquelin",
-        "giacomel"
-    ]
+  "race_name": "Sprint Test",
+  "athletes": [
+    "botn",
+    "jacquelin",
+    "fillon",
+    "giacomel",
+    "christiansen",
+    "ponsiluoma",
+    "laegreid",
+    "dale",
+    "samuelsson",
+    "nawrath",
+    "perrot"
+  ]
 }

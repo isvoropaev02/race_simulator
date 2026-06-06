@@ -1,6 +1,7 @@
 import math
 import random
 from enum import Enum, auto
+from src.logger import logger
 
 # скорости в м/с
 V_BASE_UPHILL = 4.2
@@ -61,7 +62,8 @@ class AthleteState:
         self.speed = 0.0  # текущая скорость, м/с (вычисляется при каждом обновлении)
         self.time = 0.0  # общее время гонки спортсмена, сек
         self.finish_sprint_active = False
-        self.ski_slowing = random.uniform(-0.05, 0.22)
+        self.ski_slowing = random.uniform(-0.01, 0.20)
+        logger.debug(f"Ski slowing for {athlete.name} is set to {self.ski_slowing}")
 
         # Стрельба
         self.shooting_state = ShootingState.IDLE
