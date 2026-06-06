@@ -6,6 +6,7 @@ from src.athlete import Athlete
 from src.track import Track
 from src.simulation import RaceSimulation
 from src.renderer import Renderer
+from src.form_result_table import export_results_png, print_pretty_results
 
 SCREEN_WIDTH, SCREEN_HEIGHT = 1200, 800
 FPS = 30
@@ -62,7 +63,7 @@ def run():
 
     results = []
     for idx, athlete in enumerate(race_athletes, start=1):
-        print(f"\n=== Started {idx}/{len(race_athletes)}: {athlete.name} ({athlete.country}) ===")
+        print(f"[INFO] Started {idx}/{len(race_athletes)}: {athlete.name} ({athlete.country})")
 
         sim = RaceSimulation(main_track, penalty_track, time_scale_ski=TIME_SCALE_SKI)
         sim.start_athlete(athlete)
@@ -96,18 +97,14 @@ def run():
                     "misses": status["total_misses"],  # <-- изменено
                 }
                 results.append(result)
-                print(f"Finished: {athlete.name} — {status['time']:.1f} sec. (misses: {status['total_misses']})")
                 # Небольшая пауза, чтобы увидеть финиш на экране
                 pygame.time.wait(1500)
                 running = False
 
-    print("\n=== Final results ===")
-    results.sort(key=lambda r: r["time"])
-    for place, r in enumerate(results, start=1):
-        minutes = int(r["time"] // 60)
-        seconds = r["time"] % 60
-        print(f"{place}. {r['name']} ({r['country']}) — {minutes}:{seconds:05.2f} (total misses: {r['misses']})")
-
+    renderer.set_results(results)
+    renderer.draw({})
+    print_pretty_results(results)
+    export_results_png(results)
     pygame.time.wait(2000)
     pygame.quit()
 

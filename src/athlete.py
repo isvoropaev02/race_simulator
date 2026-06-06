@@ -2,16 +2,24 @@ import math
 import random
 from enum import Enum, auto
 
-V_MAX_UPHILL = 5.5  # м/с на подъёме при навыке 100
-V_MAX_FLAT = 8.0  # м/с на равнине при навыке 100
-V_MAX_DOWNHILL = 9.5  # м/с на спуске при навыке 100
+# скорости в м/с
+V_BASE_UPHILL = 4.9
+V_ADD_UPHILL = 0.6
+V_BASE_FLAT = 7.7
+V_ADD_FLAT = 0.8
+V_BASE_DOWNHILL = 9.0
+V_ADD_DOWNHILL = 0.4
 
 FATIGUE_RATE = 0.003  # базовая скорость роста усталости (в единицах усталости за секунду)
 FATIGUE_FACTOR = {"uphill": 1.5, "flat": 1.0, "downhill": 0.6}  # множители накопления усталости в зависимости от рельефа
-K_FATIGUE = 0.15  # насколько сильно усталость замедляет (скорость *= (1 - k*F))
+K_FATIGUE = 0.02  # насколько сильно усталость замедляет (скорость *= (1 - k*F))
 
-T_BASE_SHOT = 3.0  # базовый интервал между выстрелами, сек
-P_HIT_MIN = 0.2  # минимальный шанс попадания даже при нулевом навыке точности
+T_BASE_PRONE_SHOT = 3.2
+T_ADD_PRONE_SHOT = 0.8
+T_BASE_STAND_SHOT = 2.7
+T_ADD_STAND_SHOT = 1.0
+P_HIT_MIN = 0.2
+TOTAL_P_HIT = 0.98  # чтоб даже при навыке 100 бывали промахи хоть иногда
 
 
 class Athlete:
@@ -79,11 +87,11 @@ class AthleteState:
         """Базовая скорость на данном уклоне без учёта усталости."""
         cat = self._slope_category(slope)
         if cat == "uphill":
-            return (self.athlete.skills["uphill"] / 100.0) * V_MAX_UPHILL
+            return (self.athlete.skills["uphill"] / 100.0) * V_ADD_UPHILL + V_BASE_UPHILL
         elif cat == "downhill":
-            return (self.athlete.skills["downhill"] / 100.0) * V_MAX_DOWNHILL
+            return (self.athlete.skills["downhill"] / 100.0) * V_ADD_DOWNHILL + V_BASE_DOWNHILL
         else:  # flat
-            return (self.athlete.skills["flat"] / 100.0) * V_MAX_FLAT
+            return (self.athlete.skills["flat"] / 100.0) * V_ADD_FLAT + V_BASE_FLAT
 
     def _fatigue_multiplier(self) -> float:
         """Коэффициент замедления из-за накопленной усталости."""
@@ -126,11 +134,10 @@ class AthleteState:
         # Определяем навык скорости стрельбы
         if shooting_type == "prone":
             speed_skill = self.athlete.skills["shoot_speed_prone"]
+            self.shot_interval = T_BASE_PRONE_SHOT - T_ADD_PRONE_SHOT * speed_skill / 100.0
         else:
             speed_skill = self.athlete.skills["shoot_speed_stand"]
-
-        # Время между выстрелами (от 2.8 сек при навыке 0 до 1.2 сек при 100)
-        self.shot_interval = T_BASE_SHOT * (1.4 - 0.8 * (speed_skill / 100.0))
+            self.shot_interval = T_BASE_STAND_SHOT - T_ADD_STAND_SHOT * speed_skill / 100.0
 
     def update_shooting(self, dt: float):
         """
@@ -153,7 +160,7 @@ class AthleteState:
             else:
                 acc_skill = self.athlete.skills["shoot_acc_stand"]
 
-            hit_prob = P_HIT_MIN + 0.8 * (acc_skill / 100.0)
+            hit_prob = P_HIT_MIN + (TOTAL_P_HIT - P_HIT_MIN) * (acc_skill / 100.0)
             hit = random.random() < hit_prob
             self.shot_results.append(hit)
             if not hit:

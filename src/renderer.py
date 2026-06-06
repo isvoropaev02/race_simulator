@@ -155,7 +155,6 @@ class Renderer:
         if status:
             name = status.get("athlete_name", "")
             country = status.get("country", "")
-            age = status.get("age", "")
             lines.append(f"{name} ({country})")
 
             t = status.get("time", 0.0)
@@ -163,13 +162,8 @@ class Renderer:
             seconds = t % 60
             lines.append(f"Time: {minutes}:{seconds:05.2f}")
             lines.append(f"State: {status.get('state', '')}")
-
-            # Стрельбу отсюда убрали, теперь только краткая сводка (опционально)
-            shooting = status.get("shooting", False)
-            if shooting:
-                lines.append("Shooting...")
-            # Штрафные круги
             penalty = status.get("penalty_loops_left", 0)
+            lines.append(f"Tot. misses: {status.get("total_misses", "-")}")
             if penalty > 0:
                 lines.append(f"Penalty loops left: {penalty}")
             # Скорость и усталость
@@ -231,13 +225,25 @@ class Renderer:
         if not self.results:
             return
 
-        # Сортировка по времени
         sorted_results = sorted(self.results, key=lambda r: r["time"])
+        first_time = sorted_results[0]["time"]  # новое
         y = self.leaderboard_rect.top + 28
+
         for place, r in enumerate(sorted_results, start=1):
-            minutes = int(r["time"] // 60)
-            seconds = r["time"] % 60
-            line = f"{place}. {r['name']} ({r['country']})  misses:{r['misses']}  {minutes}:{seconds:05.2f}"
+            t = r["time"]
+            if place == 1:
+                # Абсолютное время лидера
+                minutes = int(t // 60)
+                seconds = t % 60
+                time_str = f"{minutes}:{seconds:05.2f}"
+            else:
+                # Отставание от первого
+                diff = t - first_time
+                minutes = int(diff // 60)
+                seconds = diff % 60
+                time_str = f"+{minutes}.{seconds:04.1f}"
+
+            line = f"{place}. {r['name']} ({r['country']})  misses:{r['misses']}  {time_str}"
             text = self.font_small.render(line, True, COLOR_TEXT)
             self.screen.blit(text, (self.leaderboard_rect.left + 8, y))
             y += 20
