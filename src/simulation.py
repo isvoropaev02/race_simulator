@@ -2,6 +2,8 @@ from enum import Enum, auto
 from src.athlete import Athlete, AthleteState, FATIGUE_FACTOR, FATIGUE_RATE
 from src.track import Track
 
+FINISH_ACC_START_POINT = 1500
+
 
 class RaceState(Enum):
     SKIING_LOOP_1 = auto()
@@ -85,7 +87,7 @@ class RaceSimulation:
             remaining_in_seg = seg.length - dist_in_seg
 
             # --- финишное ускорение ---
-            if self.loop_counter == 3 and (track.total_length - athlete.distance) <= 1000:
+            if self.loop_counter == 3 and (track.total_length - athlete.distance) <= FINISH_ACC_START_POINT:
                 athlete.set_finish_sprint(True)
             else:
                 athlete.set_finish_sprint(False)

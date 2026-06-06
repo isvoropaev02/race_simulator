@@ -12,7 +12,7 @@ V_ADD_DOWNHILL = 0.4
 
 FATIGUE_RATE = 0.003  # базовая скорость роста усталости (в единицах усталости за секунду)
 FATIGUE_FACTOR = {"uphill": 1.5, "flat": 1.0, "downhill": 0.6}  # множители накопления усталости в зависимости от рельефа
-K_FATIGUE = 0.02  # насколько сильно усталость замедляет (скорость *= (1 - k*F))
+K_FATIGUE = 0.05  # насколько сильно усталость замедляет (скорость *= (1 - k*F))
 
 T_BASE_PRONE_SHOT = 3.2
 T_ADD_PRONE_SHOT = 0.8
@@ -86,14 +86,14 @@ class AthleteState:
 
     def _base_speed(self, slope: float) -> float:
         """Базовая скорость на данном уклоне без учёта усталости."""
-        finish_boost = 0.85 if self.finish_sprint_active else 0.0
+        finish_boost = self.athlete.skills["finish_sprint"] / 100.0 if self.finish_sprint_active else 0.0
         cat = self._slope_category(slope)
         if cat == "uphill":
-            return (self.athlete.skills["uphill"] / 100.0) * V_ADD_UPHILL + V_BASE_UPHILL * (1 + finish_boost)
+            return (self.athlete.skills["uphill"] / 100.0 + finish_boost) * V_ADD_UPHILL + V_BASE_UPHILL
         elif cat == "downhill":
-            return (self.athlete.skills["downhill"] / 100.0) * V_ADD_DOWNHILL + V_BASE_DOWNHILL * (1 + finish_boost)
+            return (self.athlete.skills["downhill"] / 100.0 + finish_boost) * V_ADD_DOWNHILL + V_BASE_DOWNHILL
         else:  # flat
-            return (self.athlete.skills["flat"] / 100.0) * V_ADD_FLAT + V_BASE_FLAT * (1 + finish_boost)
+            return (self.athlete.skills["flat"] / 100.0 + finish_boost) * V_ADD_FLAT + V_BASE_FLAT
 
     def _fatigue_multiplier(self) -> float:
         """Коэффициент замедления из-за накопленной усталости."""
