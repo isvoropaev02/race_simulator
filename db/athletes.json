@@ -1,0 +1,52 @@
+{
+    "athletes": [
+        {
+            "id": "bjorndalen",
+            "name": "Ole Einar Bjorndalen",
+            "country": "NOR",
+            "age": 40,
+            "skills": {
+                "uphill": 85,
+                "flat": 90,
+                "downhill": 78,
+                "shoot_speed_prone": 92,
+                "shoot_acc_prone": 88,
+                "shoot_speed_stand": 85,
+                "shoot_acc_stand": 80,
+                "finish_sprint": 95
+            }
+        },
+        {
+            "id": "fourcade",
+            "name": "Martin Fourcade",
+            "country": "FRA",
+            "age": 31,
+            "skills": {
+                "uphill": 89,
+                "flat": 91,
+                "downhill": 77,
+                "shoot_speed_prone": 94,
+                "shoot_acc_prone": 89,
+                "shoot_speed_stand": 90,
+                "shoot_acc_stand": 80,
+                "finish_sprint": 96
+            }
+        },
+        {
+            "id": "svendsen",
+            "name": "Emil Hegle Svendsen",
+            "country": "NOR",
+            "age": 31,
+            "skills": {
+                "uphill": 89,
+                "flat": 91,
+                "downhill": 79,
+                "shoot_speed_prone": 91,
+                "shoot_acc_prone": 90,
+                "shoot_speed_stand": 89,
+                "shoot_acc_stand": 77,
+                "finish_sprint": 99
+            }
+        }
+    ]
+}
