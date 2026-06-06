@@ -40,6 +40,12 @@ class RaceSimulation:
         self.loop_counter = 0  # сколько основных кругов завершено
         self.finished = False
 
+    def _is_finish_straight(self) -> bool:
+        """Возвращает True, если спортсмен на последнем круге и до финиша ≤ 200 м."""
+        if self.state != RaceState.SKIING_LOOP_3:
+            return False
+        return (self.main_track.total_length - self.athlete_state.distance) <= 150
+
     def start_athlete(self, athlete: Athlete):
         """Подготовить нового спортсмена и начать гонку."""
         self.athlete_state = AthleteState(athlete)
@@ -57,8 +63,9 @@ class RaceSimulation:
         if self.finished or self.athlete_state is None:
             return self._get_status()
 
-        # Определяем текущий временной масштаб
         if self.state in (RaceState.SHOOTING_PRONE, RaceState.SHOOTING_STAND):
+            dt_sim = dt_real * self.time_scale_shooting
+        elif self._is_finish_straight():
             dt_sim = dt_real * self.time_scale_shooting
         else:
             dt_sim = dt_real * self.time_scale_ski

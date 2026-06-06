@@ -6,11 +6,11 @@
             "country": "FRA",
             "age": 25,
             "skills": {
-                "uphill": 85,
+                "uphill": 86,
                 "flat": 90,
                 "downhill": 83,
-                "shoot_speed_prone": 85,
-                "shoot_acc_prone": 94,
+                "shoot_speed_prone": 87,
+                "shoot_acc_prone": 95,
                 "shoot_speed_stand": 97,
                 "shoot_acc_stand": 89,
                 "finish_sprint": 94,
@@ -127,11 +127,11 @@
             "skills": {
                 "uphill": 97,
                 "flat": 98,
-                "downhill": 96,
+                "downhill": 92,
                 "shoot_speed_prone": 81,
-                "shoot_acc_prone": 85,
+                "shoot_acc_prone": 81,
                 "shoot_speed_stand": 82,
-                "shoot_acc_stand": 85,
+                "shoot_acc_stand": 83,
                 "finish_sprint": 98,
                 "endurance": 95
             }
@@ -144,7 +144,7 @@
             "skills": {
                 "uphill": 84,
                 "flat": 89,
-                "downhill": 95,
+                "downhill": 91,
                 "shoot_speed_prone": 82,
                 "shoot_acc_prone": 83,
                 "shoot_speed_stand": 85,
@@ -161,7 +161,7 @@
             "skills": {
                 "uphill": 98,
                 "flat": 97,
-                "downhill": 93,
+                "downhill": 92,
                 "shoot_speed_prone": 81,
                 "shoot_acc_prone": 85,
                 "shoot_speed_stand": 81,
@@ -176,9 +176,9 @@
             "country": "FRA",
             "age": 34,
             "skills": {
-                "uphill": 96,
-                "flat": 96,
-                "downhill": 96,
+                "uphill": 94,
+                "flat": 94,
+                "downhill": 90,
                 "shoot_speed_prone": 89,
                 "shoot_acc_prone": 93,
                 "shoot_speed_stand": 91,
