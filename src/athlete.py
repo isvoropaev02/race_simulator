@@ -3,16 +3,16 @@ import random
 from enum import Enum, auto
 
 # скорости в м/с
-V_BASE_UPHILL = 4.9
-V_ADD_UPHILL = 0.6
-V_BASE_FLAT = 7.7
-V_ADD_FLAT = 0.8
+V_BASE_UPHILL = 4.2
+V_ADD_UPHILL = 1.0
+V_BASE_FLAT = 7.0
+V_ADD_FLAT = 1.8
 V_BASE_DOWNHILL = 9.0
-V_ADD_DOWNHILL = 0.4
+V_ADD_DOWNHILL = 0.9
 
 FATIGUE_RATE = 0.003  # базовая скорость роста усталости (в единицах усталости за секунду)
 FATIGUE_FACTOR = {"uphill": 1.2, "flat": 0.3, "downhill": -0.1}  # множители накопления усталости в зависимости от рельефа
-K_FATIGUE = 0.05  # насколько сильно усталость замедляет (скорость *= (1 - k*F))
+K_FATIGUE = 0.0005  # насколько сильно усталость замедляет (скорость *= (1 - k*F))
 
 T_BASE_PRONE_SHOT = 3.2
 T_ADD_PRONE_SHOT = 0.8
@@ -61,6 +61,7 @@ class AthleteState:
         self.speed = 0.0  # текущая скорость, м/с (вычисляется при каждом обновлении)
         self.time = 0.0  # общее время гонки спортсмена, сек
         self.finish_sprint_active = False
+        self.ski_slowing = random.uniform(-0.05, 0.22)
 
         # Стрельба
         self.shooting_state = ShootingState.IDLE
@@ -89,15 +90,18 @@ class AthleteState:
         finish_boost = self.athlete.skills["finish_sprint"] / 100.0 if self.finish_sprint_active else 0.0
         cat = self._slope_category(slope)
         if cat == "uphill":
-            return (self.athlete.skills["uphill"] / 100.0 + finish_boost) * V_ADD_UPHILL + V_BASE_UPHILL
+            return (self.athlete.skills["uphill"] / 100.0 + finish_boost - self.ski_slowing) * V_ADD_UPHILL + V_BASE_UPHILL
         elif cat == "downhill":
-            return (self.athlete.skills["downhill"] / 100.0 + finish_boost) * V_ADD_DOWNHILL + V_BASE_DOWNHILL
+            return (
+                self.athlete.skills["downhill"] / 100.0 + finish_boost - self.ski_slowing
+            ) * V_ADD_DOWNHILL + V_BASE_DOWNHILL
         else:  # flat
-            return (self.athlete.skills["flat"] / 100.0 + finish_boost) * V_ADD_FLAT + V_BASE_FLAT
+            return (self.athlete.skills["flat"] / 100.0 + finish_boost - self.ski_slowing) * V_ADD_FLAT + V_BASE_FLAT
 
     def _fatigue_multiplier(self) -> float:
         """Коэффициент замедления из-за накопленной усталости."""
-        return max(0.7, 1.0 - K_FATIGUE * self.fatigue)
+        fatigue = max(0.0, self.fatigue)
+        return max(0.7, 1.0 - K_FATIGUE * fatigue)
 
     def update_movement(self, dt: float, slope: float):
         """

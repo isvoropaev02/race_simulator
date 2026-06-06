@@ -1,4 +1,3 @@
-import sys
 import json
 import pygame
 from pathlib import Path
@@ -7,6 +6,7 @@ from src.track import Track
 from src.simulation import RaceSimulation
 from src.renderer import Renderer
 from src.form_result_table import export_results_png, print_pretty_results
+from src.logger import logger
 
 SCREEN_WIDTH, SCREEN_HEIGHT = 1200, 800
 FPS = 30
@@ -35,7 +35,7 @@ def load_race_athletes(filepath: str, athletes_db: dict) -> list:
     athlete_list = []
     for aid in race_data["athletes"]:
         if aid not in athletes_db:
-            print(f"[WARNING] Sportsman with id: '{aid}' not found in athletes.json.")
+            logger.warning(f"Sportsman with id: '{aid}' not found in athletes.json.")
             continue
         athlete_list.append(athletes_db[aid])
     return athlete_list
@@ -43,17 +43,17 @@ def load_race_athletes(filepath: str, athletes_db: dict) -> list:
 
 def run():
     athletes_db = load_athletes(ATHLETES_FILE)
-    print(f"[INFO] Loaded {len(athletes_db)} sportsmen.")
+    logger.info(f"Loaded {len(athletes_db)} sportsmen.")
     main_track = Track(TRACK_FILE)
-    print(f"[INFO] Main track length: {main_track.total_length:.0f} m, {len(main_track.segments)} segments.")
+    logger.info(f"Main track length: {main_track.total_length:.0f} m, {len(main_track.segments)} segments.")
     penalty_track = Track(PENALTY_FILE)
-    print(f"[INFO] Penalty loop length: {penalty_track.total_length:.0f} m.")
+    logger.info(f"Penalty loop length: {penalty_track.total_length:.0f} m.")
 
     race_athletes = load_race_athletes(RACE_SETUP_FILE, athletes_db)
     if not race_athletes:
-        print("[ERROR] No athletes in race_setup.json.")
+        logger.error("No athletes in race_setup.json.")
         return
-    print(f"[INFO] Total participants: {len(race_athletes)}")
+    logger.info(f"Total participants: {len(race_athletes)}")
 
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -63,7 +63,7 @@ def run():
 
     results = []
     for idx, athlete in enumerate(race_athletes, start=1):
-        print(f"[INFO] Started {idx}/{len(race_athletes)}: {athlete.name} ({athlete.country})")
+        logger.info(f"Started {idx}/{len(race_athletes)}: {athlete.name} ({athlete.country})")
 
         sim = RaceSimulation(main_track, penalty_track, time_scale_ski=TIME_SCALE_SKI)
         sim.start_athlete(athlete)

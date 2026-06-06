@@ -1,6 +1,7 @@
 from tabulate import tabulate
 import matplotlib.pyplot as plt
 from datetime import datetime
+from src.logger import logger
 
 
 def build_leaderboard_rows(results):
@@ -33,7 +34,7 @@ def build_leaderboard_rows(results):
 def print_pretty_results(results):
     """Красивая таблица в консоли."""
     if not results:
-        print("Нет результатов.")
+        logger.warning("No results for display.")
         return
 
     headers = ["Pos", "Name", "Country", "Misses", "Time"]
@@ -87,4 +88,4 @@ def export_results_png(results):
     plt.tight_layout()
     plt.savefig(filename, dpi=150, bbox_inches="tight")
     plt.close()
-    print(f"[INFO] Results saved to {filename}.")
+    logger.info(f"Results saved to {filename}.")
